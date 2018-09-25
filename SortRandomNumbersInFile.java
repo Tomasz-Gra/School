@@ -21,7 +21,7 @@ class SortRandomNumbersInFile {
     }
 
     private void printToFile() throws IOException {
-        FileWriter fileWriter = new FileWriter("C:\\Users\\A702387\\Desktop\\School\\src\\text.txt");
+        FileWriter fileWriter = new FileWriter("file.txt");
 
         fileWriter.write("Array before sorting: \n");
         for (int printUnsorted : arrayUnsorted)
