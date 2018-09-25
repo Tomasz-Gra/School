@@ -6,7 +6,7 @@ import java.util.Random;
 
 class SortRandomNumbersInFile {
 
-    private int[] arrayOfNumber = new int[20];
+    private int[] arrayOfNumbers = new int[20];
     private int[] arrayUnsorted = new int[20];
     private int[] evenNumbers = new int[20];
     private int[] oddNumbers = new int[20];
@@ -14,21 +14,21 @@ class SortRandomNumbersInFile {
     void printToArray() {
         Random random = new Random();
 
-        for (int i = 0; i < arrayOfNumber.length; i++) {
-            arrayOfNumber[i] = random.nextInt(100);
-            arrayUnsorted[i] = arrayOfNumber[i];
+        for (int i = 0; i < arrayOfNumbers.length; i++) {
+            arrayOfNumbers[i] = random.nextInt(100);
+            arrayUnsorted[i] = arrayOfNumbers[i];
         }
     }
 
     private void printToFile() throws IOException {
-        FileWriter fileWriter = new FileWriter("file");
+        FileWriter fileWriter = new FileWriter("C:\\Users\\A702387\\Desktop\\School\\src\\text.txt");
 
         fileWriter.write("Array before sorting: \n");
         for (int printUnsorted : arrayUnsorted)
             fileWriter.write(String.valueOf(printUnsorted + " "));
 
         fileWriter.write("\n\nArray after sorting: \n");
-        for (int printSorted : arrayOfNumber)
+        for (int printSorted : arrayOfNumbers)
             fileWriter.write(String.valueOf(printSorted + " "));
 
         fileWriter.write("\n\nEven numbers sorted: \n");
@@ -58,11 +58,11 @@ class SortRandomNumbersInFile {
     }
 
     private void checkIfEvenOrOdd() {
-        for (int i = 0; i < arrayOfNumber.length; i++) {
-            if (arrayOfNumber[i] % 2 == 0) {
-                evenNumbers[i] = arrayOfNumber[i];
-            } else if (arrayOfNumber[i] % 2 != 0) {
-                oddNumbers[i] = arrayOfNumber[i];
+        for (int i = 0; i < arrayOfNumbers.length; i++) {
+            if (arrayOfNumbers[i] % 2 == 0) {
+                evenNumbers[i] = arrayOfNumbers[i];
+            } else if (arrayOfNumbers[i] % 2 != 0) {
+                oddNumbers[i] = arrayOfNumbers[i];
             }
         }
 
@@ -72,15 +72,15 @@ class SortRandomNumbersInFile {
 
     void printToConsole() throws IOException {
         System.out.println("Array before sorting: ");
-        for (int anArrayOfNumber : arrayOfNumber)
+        for (int anArrayOfNumber : arrayOfNumbers)
             System.out.print(anArrayOfNumber + " ");
 
-        bubbleSort(arrayOfNumber);
+        bubbleSort(arrayOfNumbers);
 
         System.out.println("\n");
 
         System.out.print("Array after sorting: \n");
-        for (int sortedNumber : arrayOfNumber) {
+        for (int sortedNumber : arrayOfNumbers) {
             System.out.print(sortedNumber + " ");
         }
 
