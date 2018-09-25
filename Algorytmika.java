@@ -12,7 +12,7 @@ class SortRandomNumbersInFile {
     private List<Integer> oddNumbers = new ArrayList<>();
 
     void readFromFile() throws IOException {
-        Scanner scanner = new Scanner(new File("sortowanie_1.txt"));
+        Scanner scanner = new Scanner(new File("sortowanie_3.txt"));
         while(scanner.hasNextInt()){
             numbers.add(scanner.nextInt());
         }
@@ -43,7 +43,6 @@ class SortRandomNumbersInFile {
     }
 
     private void checkIfEvenOrOdd() {
-
         for (Integer number : numbers) {
             if (number % 2 == 0) {
                 evenNumbers.add(number);
@@ -61,11 +60,9 @@ class SortRandomNumbersInFile {
         insertionSortDown(oddNumbers);
 
         System.out.print(numbers);
-        System.out.println("\n");
+        System.out.println("\nNiemalejaco liczby patrzyste: ");
         System.out.print(evenNumbers);
-        System.out.println("\n");
+        System.out.println("\nNierosnąco liczby niepatrzyste: ");
         System.out.print(oddNumbers);
-        System.out.println("\n");
-
     }
 }
