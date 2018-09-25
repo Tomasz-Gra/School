@@ -14,9 +14,9 @@ class SortRandomNumbersInFile {
     void printToArray() {
         Random random = new Random();
 
-        for (int i = 0; i < arrayOfNumbers.length; i++) {
-            arrayOfNumbers[i] = random.nextInt(100);
-            arrayUnsorted[i] = arrayOfNumbers[i];
+        for (int randomNumber = 0; randomNumber < arrayOfNumbers.length; randomNumber++) {
+            arrayOfNumbers[randomNumber] = random.nextInt(100);
+            arrayUnsorted[randomNumber] = arrayOfNumbers[randomNumber];
         }
     }
 
@@ -57,17 +57,30 @@ class SortRandomNumbersInFile {
         }
     }
 
+    private void insertionSort(int[] arrayOfNumber) {
+
+        for (int i = 1; i < arrayOfNumber.length; i++) {
+            for(int j = i; j > 0; j--){
+                if(arrayOfNumber[j-1] > arrayOfNumber[j]){
+                    int temp = arrayOfNumber[j];
+                    arrayOfNumber[j] = arrayOfNumber[j-1];
+                    arrayOfNumber[j-1] = temp;
+                }
+            }
+        }
+    }
+
     private void checkIfEvenOrOdd() {
-        for (int i = 0; i < arrayOfNumbers.length; i++) {
-            if (arrayOfNumbers[i] % 2 == 0) {
-                evenNumbers[i] = arrayOfNumbers[i];
-            } else if (arrayOfNumbers[i] % 2 != 0) {
-                oddNumbers[i] = arrayOfNumbers[i];
+        for (int checker = 0; checker < arrayOfNumbers.length; checker++) {
+            if (arrayOfNumbers[checker] % 2 == 0) {
+                evenNumbers[checker] = arrayOfNumbers[checker];
+            } else if (arrayOfNumbers[checker] % 2 != 0) {
+                oddNumbers[checker] = arrayOfNumbers[checker];
             }
         }
 
-        bubbleSort(evenNumbers);
-        bubbleSort(oddNumbers);
+        insertionSort(evenNumbers);
+        insertionSort(oddNumbers);
     }
 
     void printToConsole() throws IOException {
@@ -75,7 +88,7 @@ class SortRandomNumbersInFile {
         for (int anArrayOfNumber : arrayOfNumbers)
             System.out.print(anArrayOfNumber + " ");
 
-        bubbleSort(arrayOfNumbers);
+        insertionSort(arrayOfNumbers);
 
         System.out.println("\n");
 
