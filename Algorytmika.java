@@ -46,7 +46,7 @@ class SortRandomNumbersInFile {
         for (Integer number : numbers) {
             if (number % 2 == 0) {
                 evenNumbers.add(number);
-            } else if (number % 2 != 0) {
+            } else {
                 oddNumbers.add(number);
             }
         }
