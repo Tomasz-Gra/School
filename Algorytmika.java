@@ -21,7 +21,6 @@ class SortNumbersInFile {
     private void askUserWhichFile() {
         System.out.print("Please choose which file you wish to convert:\n1: sortowanie_1.txt\n2: sortowanie_2.txt\n3: sortowanie_3.txt: ");
         iterator = userInput.nextInt();
-
         System.out.print("\nYour file has been converted successfully!");
     }
 
