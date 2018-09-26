@@ -9,8 +9,8 @@ class SortNumbersInFile {
 
     private int iterator;
     private Scanner userInput = new Scanner(System.in);
-    private String[] pathNames = {"C:\\Users\\A702387\\Desktop\\School\\src\\sortowanie_1.txt", "C:\\Users\\A702387\\Desktop\\School\\src\\sortowanie_2.txt", "C:\\Users\\A702387\\Desktop\\School\\src\\sortowanie_3.txt"};
-    private String[] saveToFile = {"C:\\Users\\A702387\\Desktop\\School\\src\\sorted_1.txt", "C:\\Users\\A702387\\Desktop\\School\\src\\sorted_2.txt", "C:\\Users\\A702387\\Desktop\\School\\src\\sorted_3.txt"};
+    private String[] pathNames = {"sortowanie_1.txt", "sortowanie_2.txt", "sortowanie_3.txt"};
+    private String[] saveToFile = {"sorted_1.txt", "sorted_2.txt", "sorted_3.txt"};
 
     private List<Integer> numbers = new ArrayList<>();
     private List<Integer> evenNumbers = new ArrayList<>();
