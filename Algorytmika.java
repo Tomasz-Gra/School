@@ -5,14 +5,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-class SortRandomNumbersInFile {
+class SortNumbersInFile {
+
+    private int iterator = 0;
+    private String[] pathNames = {"sortowanie_1.txt", "sortowanie_2.txt", "sortowanie_3.txt"};
+    private String[] saveToFile = {"sorted_1.txt", "sorted_2.txt", "sorted_3.txt"};
 
     private List<Integer> numbers = new ArrayList<>();
     private List<Integer> evenNumbers = new ArrayList<>();
     private List<Integer> oddNumbers = new ArrayList<>();
+    private List<Integer> positiveNumbers = new ArrayList<>();
+    private List<Integer> negativeNumbers = new ArrayList<>();
 
-    void readFromFile() throws IOException {
-        Scanner scanner = new Scanner(new File("sortowanie_3.txt"));
+    private void readFromFile() throws IOException {
+        Scanner scanner = new Scanner(new File(pathNames[iterator]));
         while(scanner.hasNextInt()){
             numbers.add(scanner.nextInt());
         }
@@ -52,17 +58,44 @@ class SortRandomNumbersInFile {
         }
     }
 
-    void printToConsole() {
+    private void writeToFile() throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter(saveToFile[iterator]));
+
+        writer.write("Niemalejaco liczby patrzyste: \n");
+        for (int a : evenNumbers)
+            writer.write(String.valueOf(a) + " ");
+
+        writer.write("\n\n");
+        writer.write("Nierosnąco liczby niepatrzyste: \n");
+        for (int a : oddNumbers)
+            writer.write(String.valueOf(a) + " ");
+
+        writer.close();
+    }
+
+    void executeScript() throws IOException {
+        while (iterator < 3) {
+            readFromFile();
+
+            checkIfEvenOrOdd();
+
+            insertionSortUp(evenNumbers);
+            insertionSortDown(oddNumbers);
+
+            writeToFile();
+
+            iterator++;
+        }
+
+/*
+        readFromFile();
+
         checkIfEvenOrOdd();
 
-        insertionSortUp(numbers);
         insertionSortUp(evenNumbers);
         insertionSortDown(oddNumbers);
 
-        System.out.print(numbers);
-        System.out.println("\nNiemalejaco liczby patrzyste: ");
-        System.out.print(evenNumbers);
-        System.out.println("\nNierosnąco liczby niepatrzyste: ");
-        System.out.print(oddNumbers);
+        writeToFile();
+*/
     }
 }
