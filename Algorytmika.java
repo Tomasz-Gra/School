@@ -7,9 +7,10 @@ import java.util.Scanner;
 
 class SortNumbersInFile {
 
-    private int iterator = 0;
-    private String[] pathNames = {"sortowanie_1.txt", "sortowanie_2.txt", "sortowanie_3.txt"};
-    private String[] saveToFile = {"sorted_1.txt", "sorted_2.txt", "sorted_3.txt"};
+    private int iterator;
+    private Scanner userInput = new Scanner(System.in);
+    private String[] pathNames = {"C:\\Users\\A702387\\Desktop\\School\\src\\sortowanie_1.txt", "C:\\Users\\A702387\\Desktop\\School\\src\\sortowanie_2.txt", "C:\\Users\\A702387\\Desktop\\School\\src\\sortowanie_3.txt"};
+    private String[] saveToFile = {"C:\\Users\\A702387\\Desktop\\School\\src\\sorted_1.txt", "C:\\Users\\A702387\\Desktop\\School\\src\\sorted_2.txt", "C:\\Users\\A702387\\Desktop\\School\\src\\sorted_3.txt"};
 
     private List<Integer> numbers = new ArrayList<>();
     private List<Integer> evenNumbers = new ArrayList<>();
@@ -17,8 +18,15 @@ class SortNumbersInFile {
     private List<Integer> positiveNumbers = new ArrayList<>();
     private List<Integer> negativeNumbers = new ArrayList<>();
 
+    private void askUserWhichFile() {
+        System.out.print("Please choose which file you wish to convert:\n1: sortowanie_1.txt\n2: sortowanie_2.txt\n3: sortowanie_3.txt: ");
+        iterator = userInput.nextInt();
+
+        System.out.print("\nYour file has been converted successfully!");
+    }
+
     private void readFromFile() throws IOException {
-        Scanner scanner = new Scanner(new File(pathNames[iterator]));
+        Scanner scanner = new Scanner(new File(pathNames[iterator - 1]));
         while(scanner.hasNextInt()){
             numbers.add(scanner.nextInt());
         }
@@ -59,7 +67,7 @@ class SortNumbersInFile {
     }
 
     private void writeToFile() throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter(saveToFile[iterator]));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(saveToFile[iterator - 1]));
 
         writer.write("Niemalejaco liczby patrzyste: \n");
         for (int a : evenNumbers)
@@ -74,20 +82,8 @@ class SortNumbersInFile {
     }
 
     void executeScript() throws IOException {
-        while (iterator < 3) {
-            readFromFile();
+        askUserWhichFile();
 
-            checkIfEvenOrOdd();
-
-            insertionSortUp(evenNumbers);
-            insertionSortDown(oddNumbers);
-
-            writeToFile();
-
-            iterator++;
-        }
-
-/*
         readFromFile();
 
         checkIfEvenOrOdd();
@@ -96,6 +92,5 @@ class SortNumbersInFile {
         insertionSortDown(oddNumbers);
 
         writeToFile();
-*/
     }
 }
