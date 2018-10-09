@@ -15,8 +15,8 @@ class Variables {
     List<String> listOfCommonStrings = new ArrayList<>();
     List<String> deleteCommonElement = new ArrayList<>();
 
-    String firstString = "ABABBBABAAABABABAABBAABBABABABABABBAAABBAABA";
-    String secondString = "ABBABABABAABBAAAAABABABAABBABABABABAABABABBB";
+    String firstString = "ABABBBABAAABABABAABBAABBABABABABABBAAABBAABAB";
+    String secondString = "ABBABABABAABBAAAAABABABAABBABABABABAABABABBBA";
 
     private int stringCommonPart = 0;
     private int textPositionFirstString = -1;
@@ -120,7 +120,7 @@ class LoopAll extends PrintCommonStrings {
 
             if (getFirstString().isEmpty() || getSecondString().isEmpty()) {
                 Thread.sleep(1500);
-                System.out.format("\n\nIt seems that there's nothing else to compare!\nAll common parts of given strings: \u001B[34m%s\u001B[0m\n", deleteCommonElement);
+                System.out.format("\n----------------------------------------------\nIt seems that there's nothing else to compare!\nAll common parts of given strings: \u001B[34m%s\u001B[0m\n", deleteCommonElement);
                 break;
             } else {
                 setStringCommonPart(0);
