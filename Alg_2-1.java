@@ -6,8 +6,8 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        SixthLoop thirdLoop = new SixthLoop();
-        thirdLoop.sixthLoop();
+        LoopAll loopAll = new LoopAll();
+        loopAll.loopAll();
     }
 
 }
@@ -26,52 +26,40 @@ class Variables {
     String firstString = "hellothereworld";
     String secondString = "hellonearthandworld";
 
+    private int stringCommonPart = 0;
+    private int textPositionFirstString = -1;
+    private int textPositionSecondString = -1;
+
     String getFirstString() {
         return firstString;
     }
-
     void setFirstString(String firstString) {
         this.firstString = firstString;
     }
-
     String getSecondString() {
         return secondString;
     }
-
     void setSecondString(String secondString) {
         this.secondString = secondString;
     }
-
-    int stringCommonPart = 0;
-    int textPositionFirstString = -1;
-    int textPositionSecondString = -1;
-
     int getStringCommonPart() {
         return stringCommonPart;
     }
-
     void setStringCommonPart(int stringCommonPart) {
         this.stringCommonPart = stringCommonPart;
     }
-
     int getTextPositionFirstString() {
         return textPositionFirstString;
     }
-
     void setTextPositionFirstString(int textPositionFirstString) {
         this.textPositionFirstString = textPositionFirstString;
     }
-
     int getTextPositionSecondString() {
         return textPositionSecondString;
     }
-
     void setTextPositionSecondString(int textPositionSecondString) {
         this.textPositionSecondString = textPositionSecondString;
     }
-
-
-
 }
 
 class CommonStringFinder extends Variables {
@@ -121,144 +109,30 @@ class PrintCommonStrings extends PrintOnConsole {
     }
 }
 
-
-class SecondLoop extends PrintCommonStrings{
-
-    void secondLoop() {
+class LoopAll extends PrintCommonStrings {
+    void loopAll() {
         printCommonStrings();
 
-        setFirstString(listOfCommonStrings.get(0));
-        setSecondString(listOfCommonStrings.get(1));
+        for (int i = 0; i < 5; i++) {
+            setFirstString(listOfCommonStrings.get(0));
+            setSecondString(listOfCommonStrings.get(1));
 
-        if (getFirstString().isEmpty() || getSecondString().isEmpty()) {
-            System.out.println("\nThere's nothing else to compare!\n");
-            for (String common : deleteCommonElement)
-                System.out.format("Common string of %s%s%s and %s%s%s is: %s\n", color, originalFirstString, resetColor, color, originalSecondString, resetColor, common);
-            System.exit(0);
-        } else {
-            setStringCommonPart(0);
-            setTextPositionFirstString(-1);
-            setTextPositionSecondString(-1);
+            if (getFirstString().isEmpty() || getSecondString().isEmpty()) {
+                System.out.println("\nThere's nothing else to compare!\n");
+                for (String common : deleteCommonElement)
+                    System.out.format("Common string of %s%s%s and %s%s%s is: %s\n", color, originalFirstString, resetColor, color, originalSecondString, resetColor, common);
+                System.exit(0);
+            } else {
+                setStringCommonPart(0);
+                setTextPositionFirstString(-1);
+                setTextPositionSecondString(-1);
 
-            findCommonString();
-        }
+                findCommonString();
+            }
 
             System.out.println("\nSecond Loop:\n");
 
             printOnConsole();
-    }
-}
-
-
-
-class ThirdLoop extends SecondLoop {
-
-    void thirdLoop() {
-        secondLoop();
-
-        setFirstString(listOfCommonStrings.get(0));
-        setSecondString(listOfCommonStrings.get(1));
-
-        if (firstString.isEmpty()) {
-            System.out.println("\nThere's nothing else to compare!\n");
-            for (String common : deleteCommonElement)
-                System.out.format("Common string of %s%s%s and %s%s%s is: %s\n", color, originalFirstString, resetColor, color, originalSecondString, resetColor, common);
-            System.exit(0);
-        } else {
-            setStringCommonPart(0);
-            setTextPositionFirstString(-1);
-            setTextPositionSecondString(-1);
-
-            findCommonString();
         }
-
-        System.out.println("\nThird Loop:\n");
-
-        printOnConsole();
-    }
-}
-
-
-class FourthLoop extends ThirdLoop{
-
-    void fourthLoop() {
-        thirdLoop();
-
-        setFirstString(listOfCommonStrings.get(0));
-        setSecondString(listOfCommonStrings.get(1));
-
-        if (firstString.isEmpty()) {
-            System.out.println("\nThere's nothing else to compare!\n");
-            for (String common : deleteCommonElement)
-                System.out.format("Common string of %s%s%s and %s%s%s is: %s\n", color, originalFirstString, resetColor, color, originalSecondString, resetColor, common);
-            System.exit(0);
-        } else {
-            setStringCommonPart(0);
-            setTextPositionFirstString(-1);
-            setTextPositionSecondString(-1);
-
-            findCommonString();
-        }
-
-        System.out.println("\nFourth Loop:\n");
-
-        printOnConsole();
-    }
-}
-
-
-class FifthLoop extends FourthLoop{
-
-    void fifthLoop() {
-        fourthLoop();
-
-        setFirstString(listOfCommonStrings.get(0));
-        setSecondString(listOfCommonStrings.get(1));
-
-        if (firstString.isEmpty()) {
-            System.out.println("\nThere's nothing else to compare!\n");
-            for (String common : deleteCommonElement)
-                System.out.format("Common string of %s%s%s and %s%s%s is: %s\n", color, originalFirstString, resetColor, color, originalSecondString, resetColor, common);
-            System.exit(0);
-        } else {
-            setStringCommonPart(0);
-            setTextPositionFirstString(-1);
-            setTextPositionSecondString(-1);
-
-            findCommonString();
-        }
-
-        System.out.println("\nFourth Loop:\n");
-
-        printOnConsole();
-    }
-}
-
-
-
-class SixthLoop extends FifthLoop {
-
-    void sixthLoop() {
-        fifthLoop();
-
-        setFirstString(listOfCommonStrings.get(0));
-        setSecondString(listOfCommonStrings.get(1));
-
-        if (firstString.isEmpty()) {
-            System.out.println("\nThere's nothing else to compare!\n");
-            for (String common : deleteCommonElement)
-                System.out.format("Common string of %s%s%s and %s%s%s is: %s\n", color, originalFirstString, resetColor, color, originalSecondString, resetColor, common);
-            System.exit(0);
-        } else {
-            setStringCommonPart(0);
-            setTextPositionFirstString(-1);
-            setTextPositionSecondString(-1);
-
-            findCommonString();
-        }
-
-        System.out.println("\nFourth Loop:\n");
-
-        printOnConsole();
     }
 }
