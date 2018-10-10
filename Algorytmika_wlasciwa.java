@@ -28,6 +28,7 @@ class Variables {
     private int textPositionFirstString = -1;
     private int textPositionSecondString = -1;
     int numberOfChecks = 50;
+    int napTime = 1000;
 
     String lines = "---------------------------------------------------------------";
 
@@ -68,7 +69,7 @@ class CommonStringFinder extends Variables {
 class PrintOnConsole extends CommonStringFinder {
     void printOnConsole() throws InterruptedException {
         if (getTextPositionFirstString() != -1 || getTextPositionSecondString() != -1) {
-            System.out.format("Starting position in \033[1;36m%s\u001B[0m: \033[1;36m%d\u001B[0m\nStarting position in \033[1;35m%s\u001B[0m: \033[1;35m%d\u001B[0m\nLength of common part: \033[1;34m%d\u001B[0m\n\n", firstString, getTextPositionFirstString(), secondString, getTextPositionSecondString(), getLengthOfCommonPart());
+            System.out.format("Length of common part: \033[1;34m%d\u001B[0m\n\n", getLengthOfCommonPart());
 
             System.out.format("%s\033[4;36m%s\u001B[0m%s\n", firstString.substring(0, getTextPositionFirstString()), firstString.substring(getTextPositionFirstString(), getLengthOfCommonPart() + getTextPositionFirstString()), firstString.substring(getLengthOfCommonPart() + getTextPositionFirstString()));
             System.out.format("%s\033[4;35m%s\u001B[0m%s\n", secondString.substring(0, getTextPositionSecondString()), secondString.substring(getTextPositionSecondString(), getLengthOfCommonPart() + getTextPositionSecondString()), secondString.substring(getLengthOfCommonPart() + getTextPositionSecondString()));
@@ -83,9 +84,9 @@ class PrintOnConsole extends CommonStringFinder {
             System.out.format("\nCommon part(s) as far: \033[1;34m%s\u001B[0m\n", listOfCommonStrings);
         } else {
             System.out.format("It seems that there's nothing else to compare...\n");
-            Thread.sleep(1000);
+            Thread.sleep(napTime);
             System.out.format("Finishing task...\n\n");
-            Thread.sleep(1500);
+            Thread.sleep(napTime);
 
             System.out.format("%s\n\nAll common part(s) of \033[1;36m%s\u001B[0m and \033[1;35m%s\u001B[0m are: \033[1;34m%s\u001B[0m\n\n%s\n\n", lines, originalFirstString, originalSecondString, listOfCommonStrings, lines);
             System.out.print("Author: \033[1;31mTomasz Grabarczyk\u001B[0m\n");
@@ -99,10 +100,13 @@ class CompareEverything extends PrintOnConsole {
         setFirstString(getFirstString().toLowerCase());
         setSecondString(getSecondString().toLowerCase());
 
-        System.out.print("Performing action...\n");
-        Thread.sleep(1000);
+        Thread.sleep(napTime);
+        System.out.print(lines);
+        Thread.sleep(napTime);
+        System.out.print("\n\nPerforming 1. action...\n");
+        Thread.sleep(napTime);
         System.out.print("It seems that there is something to compare...\n\n");
-        Thread.sleep(1000);
+        Thread.sleep(napTime);
 
         commonStringFinder();
         printOnConsole();
@@ -116,11 +120,14 @@ class CompareEverything extends PrintOnConsole {
 
             commonStringFinder();
 
-            System.out.print("\nPerforming action...\n");
-            Thread.sleep(1000);
+            Thread.sleep(napTime);
+            System.out.format("\n%s", lines);
+            Thread.sleep(napTime);
+            System.out.format("\n\nPerforming %d. action...\n", i + 2);
+            Thread.sleep(napTime);
             if (getTextPositionFirstString() != -1 || getTextPositionSecondString() != -1) {
                 System.out.println("It seems that there is something to compare...\n");
-                Thread.sleep(1000);
+                Thread.sleep(napTime);
             }
             printOnConsole();
         }
