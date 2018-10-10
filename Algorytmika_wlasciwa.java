@@ -15,8 +15,11 @@ class Variables {
     List<String> updatedString = new ArrayList<>();
     List<String> listOfCommonStrings = new ArrayList<>();
 
-    String firstString = "SomeDumbTextsToCompareAndSecondText";
-    String secondString = "SomeEvenDumberTextToCompareText";
+    //String firstString = "SomeDumbTextsToCompareAndSecondText";
+    //String secondString = "SomeEvenDumberTextToCompareText";
+
+    String firstString = "ABABBBBABAAABABABABBABABABAAABBABABASomeDumbTextsToCompareAndSecondText";
+    String secondString = "ABBBBABABAABABAABABABABAAABBABABABBABABABAASomeEvenDumberTextToCompareText";
 
     String originalFirstString = firstString;
     String originalSecondString = secondString;
@@ -25,6 +28,8 @@ class Variables {
     private int textPositionFirstString = -1;
     private int textPositionSecondString = -1;
     int numberOfChecks = 50;
+
+    String lines = "---------------------------------------------------------------";
 
     String getFirstString() { return firstString; }
     String getSecondString() { return secondString; }
@@ -72,8 +77,8 @@ class PrintOnConsole extends CommonStringFinder {
 
             listOfCommonStrings.add(firstString.substring(getTextPositionFirstString(), getLengthOfCommonPart() + getTextPositionFirstString()));
 
-            updatedString.add(firstString.replaceFirst(firstString.substring(getTextPositionFirstString(), getLengthOfCommonPart() + getTextPositionFirstString()), ""));
-            updatedString.add(secondString.replaceFirst(secondString.substring(getTextPositionSecondString(), getLengthOfCommonPart() + getTextPositionSecondString()), ""));
+            updatedString.add(firstString.replaceFirst(firstString.substring(getTextPositionFirstString(), getLengthOfCommonPart() + getTextPositionFirstString()), ":"));
+            updatedString.add(secondString.replaceFirst(secondString.substring(getTextPositionSecondString(), getLengthOfCommonPart() + getTextPositionSecondString()), ";"));
 
             System.out.format("\nCommon part(s) as far: \033[1;34m%s\u001B[0m\n", listOfCommonStrings);
         } else {
@@ -81,8 +86,8 @@ class PrintOnConsole extends CommonStringFinder {
             Thread.sleep(1000);
             System.out.format("Finishing task...\n\n");
             Thread.sleep(1500);
-            System.out.format("----------------------------------------------\n\nAll common parts of \033[1;36m%s\u001B[0m and \033[1;35m%s\u001B[0m are: \033[1;34m%s\u001B[0m\n", originalFirstString, originalSecondString, listOfCommonStrings);
-            System.out.format("\nParts that doesn't have anything in common are: \033[1;36m%s\u001B[0m and \033[1;35m%s\u001B[0m.\n\n----------------------------------------------\n\n", firstString, secondString);
+
+            System.out.format("%s\n\nAll common part(s) of \033[1;36m%s\u001B[0m and \033[1;35m%s\u001B[0m are: \033[1;34m%s\u001B[0m\n\n%s\n\n", lines, originalFirstString, originalSecondString, listOfCommonStrings, lines);
             System.out.print("Author: \033[1;31mTomasz Grabarczyk\u001B[0m\n");
             System.exit(0);
         }
