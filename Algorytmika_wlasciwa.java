@@ -26,37 +26,17 @@ class Variables {
     private int textPositionSecondString = -1;
     int numberOfChecks = 50;
 
-    String getFirstString() {
-        return firstString;
-    }
-    String getSecondString() {
-        return secondString;
-    }
-    int getLengthOfCommonPart() {
-        return lengthOfCommonPart;
-    }
-    int getTextPositionFirstString() {
-        return textPositionFirstString;
-    }
-    int getTextPositionSecondString() {
-        return textPositionSecondString;
-    }
+    String getFirstString() { return firstString; }
+    String getSecondString() { return secondString; }
+    int getLengthOfCommonPart() { return lengthOfCommonPart; }
+    int getTextPositionFirstString() { return textPositionFirstString; }
+    int getTextPositionSecondString() { return textPositionSecondString; }
 
-    void setFirstString(String firstString) {
-        this.firstString = firstString;
-    }
-    void setSecondString(String secondString) {
-        this.secondString = secondString;
-    }
-    void setLengthOfCommonPart(int lengthOfCommonPart) {
-        this.lengthOfCommonPart = lengthOfCommonPart;
-    }
-    void setTextPositionFirstString(int textPositionFirstString) {
-        this.textPositionFirstString = textPositionFirstString;
-    }
-    void setTextPositionSecondString(int textPositionSecondString) {
-        this.textPositionSecondString = textPositionSecondString;
-    }
+    void setFirstString(String firstString) { this.firstString = firstString; }
+    void setSecondString(String secondString) { this.secondString = secondString; }
+    void setLengthOfCommonPart(int lengthOfCommonPart) { this.lengthOfCommonPart = lengthOfCommonPart; }
+    void setTextPositionFirstString(int textPositionFirstString) { this.textPositionFirstString = textPositionFirstString; }
+    void setTextPositionSecondString(int textPositionSecondString) { this.textPositionSecondString = textPositionSecondString; }
 }
 
 class CommonStringFinder extends Variables {
