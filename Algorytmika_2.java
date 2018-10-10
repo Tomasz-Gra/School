@@ -5,49 +5,58 @@ import java.util.List;
 
 public class Main {
 
-    public static void main(String[] args) {
-        SixthLoop thirdLoop = new SixthLoop();
-        thirdLoop.sixthLoop();
+    public static void main(String[] args) throws InterruptedException {
+        CompareEverything compareEverything = new CompareEverything();
+        compareEverything.compareEverything();
     }
-
 }
 
 class Variables {
+    List<String> updatedString = new ArrayList<>();
     List<String> listOfCommonStrings = new ArrayList<>();
-    List<String> deleteCommonElement = new ArrayList<>();
 
-    String originalFirstString = "hellothereworld";
-    String originalSecondString = "hellonearthandworld";
+    //String firstString = "SomeDumbTextsToCompareAndSecondText";
+    //String secondString = "SomeEvenDumberTextToCompareText";
 
-    String color = "\u001B[34m";
-    String resetColor = "\u001B[0m";
+    String firstString = "ABABBBBABAAABABABABBABABABAAABBABABASomeDumbTextsToCompareAndSecondText";
+    String secondString = "ABBBBABABAABABAABABABABAAABBABABABBABABABAASomeEvenDumberTextToCompareText";
 
-    String firstString = "hellothereworld";
-    String secondString = "hellonearthandworld";
+    String originalFirstString = firstString;
+    String originalSecondString = secondString;
 
-    int lengthFirstString = firstString.length();
-    int lengthSecondString = secondString.length();
+    private int lengthOfCommonPart = 0;
+    private int textPositionFirstString = -1;
+    private int textPositionSecondString = -1;
+    int numberOfChecks = 50;
 
-    int stringCommonPart = 0;
-    int textPositionFirstString = -1;
-    int textPositionSecondString = -1;
+    String lines = "---------------------------------------------------------------";
+
+    String getFirstString() { return firstString; }
+    String getSecondString() { return secondString; }
+    int getLengthOfCommonPart() { return lengthOfCommonPart; }
+    int getTextPositionFirstString() { return textPositionFirstString; }
+    int getTextPositionSecondString() { return textPositionSecondString; }
+
+    void setFirstString(String firstString) { this.firstString = firstString; }
+    void setSecondString(String secondString) { this.secondString = secondString; }
+    void setLengthOfCommonPart(int lengthOfCommonPart) { this.lengthOfCommonPart = lengthOfCommonPart; }
+    void setTextPositionFirstString(int textPositionFirstString) { this.textPositionFirstString = textPositionFirstString; }
+    void setTextPositionSecondString(int textPositionSecondString) { this.textPositionSecondString = textPositionSecondString; }
 }
 
-
 class CommonStringFinder extends Variables {
-
-    void findCommonString() {
-        for (int i = 0; i < lengthFirstString; i++) {
-            for (int k = lengthSecondString - 1; k >= 0; k--) {
+    void commonStringFinder() {
+        for (int firstIncrement = 0; firstIncrement < getFirstString().length(); firstIncrement++) {
+            for (int secondDecrement = getSecondString().length() - 1; secondDecrement >= 0; secondDecrement--) {
                 int counter = 0;
-                for (int j = k; j < lengthSecondString; j++) {
-                    if ((i + j - k) >= lengthFirstString) break;
-                    if (firstString.charAt(i + j - k) == secondString.charAt(j)) {
+                for (int secondIncrement = secondDecrement; secondIncrement < getSecondString().length(); secondIncrement++) {
+                    if ((firstIncrement + secondIncrement - secondDecrement) >= getFirstString().length()) break;
+                    if (getFirstString().charAt(firstIncrement + secondIncrement - secondDecrement) == getSecondString().charAt(secondIncrement)) {
                         counter++;
-                        if (stringCommonPart < counter) {
-                            stringCommonPart = counter;
-                            textPositionFirstString = i + j - k - stringCommonPart + 1;
-                            textPositionSecondString = j - stringCommonPart + 1;
+                        if (getLengthOfCommonPart() < counter) {
+                            setLengthOfCommonPart(counter);
+                            setTextPositionFirstString(firstIncrement + secondIncrement - secondDecrement - getLengthOfCommonPart() + 1);
+                            setTextPositionSecondString(secondIncrement - getLengthOfCommonPart() + 1);
                         }
                     } else counter = 0;
                 }
@@ -56,322 +65,64 @@ class CommonStringFinder extends Variables {
     }
 }
 
+class PrintOnConsole extends CommonStringFinder {
+    void printOnConsole() throws InterruptedException {
+        if (getTextPositionFirstString() != -1 || getTextPositionSecondString() != -1) {
+            System.out.format("Length of common part: \033[1;34m%d\u001B[0m\n\n", getLengthOfCommonPart());
 
-class PrintCommonStrings extends CommonStringFinder {
-    void printCommonStrings() {
-        findCommonString();
+            System.out.format("%s\033[4;36m%s\u001B[0m%s\n", firstString.substring(0, getTextPositionFirstString()), firstString.substring(getTextPositionFirstString(), getLengthOfCommonPart() + getTextPositionFirstString()), firstString.substring(getLengthOfCommonPart() + getTextPositionFirstString()));
+            System.out.format("%s\033[4;35m%s\u001B[0m%s\n", secondString.substring(0, getTextPositionSecondString()), secondString.substring(getTextPositionSecondString(), getLengthOfCommonPart() + getTextPositionSecondString()), secondString.substring(getLengthOfCommonPart() + getTextPositionSecondString()));
 
-        System.out.println("Starting position in 1st string: " + textPositionFirstString + "\nStarting position in 2nd string: " + textPositionSecondString + "\nLength of common part: " + stringCommonPart);
+            updatedString.clear();
 
-        System.out.println();
-        System.out.println(firstString.substring(0, textPositionFirstString) + "\u001B[34m" + firstString.substring(textPositionFirstString, stringCommonPart + textPositionFirstString) + "\u001B[0m" + firstString.substring(stringCommonPart + textPositionFirstString));
-        System.out.println(secondString.substring(0, textPositionSecondString) + "\u001B[34m" + secondString.substring(textPositionSecondString, stringCommonPart + textPositionSecondString) + "\u001B[0m" + secondString.substring(stringCommonPart + textPositionSecondString));
+            listOfCommonStrings.add(firstString.substring(getTextPositionFirstString(), getLengthOfCommonPart() + getTextPositionFirstString()));
 
-        deleteCommonElement.add(firstString.substring(textPositionFirstString, stringCommonPart + textPositionFirstString));
+            updatedString.add(firstString.replaceFirst(firstString.substring(getTextPositionFirstString(), getLengthOfCommonPart() + getTextPositionFirstString()), ":"));
+            updatedString.add(secondString.replaceFirst(secondString.substring(getTextPositionSecondString(), getLengthOfCommonPart() + getTextPositionSecondString()), ";"));
 
-        listOfCommonStrings.add(firstString.replace(firstString.substring(textPositionFirstString, stringCommonPart + textPositionFirstString), ""));
-        listOfCommonStrings.add(secondString.replace(secondString.substring(textPositionSecondString, stringCommonPart + textPositionSecondString), ""));
-    }
-}
-
-
-class SecondLoop extends PrintCommonStrings{
-
-    void secondLoop() {
-        printCommonStrings();
-
-        String firstString = listOfCommonStrings.get(0);
-        String secondString = listOfCommonStrings.get(1);
-
-        if (firstString.isEmpty()) {
-            System.out.println("\nThere's nothing else to compare!\n");
-            for (String common : deleteCommonElement)
-                System.out.format("Common string of %s%s%s and %s%s%s is: %s\n", color, originalFirstString, resetColor, color, originalSecondString, resetColor, common);
-            System.exit(0);
+            System.out.format("\nCommon part(s) as far: \033[1;34m%s\u001B[0m\n", listOfCommonStrings);
         } else {
-            int lengthFirstString = firstString.length();
-            int lengthSecondString = secondString.length();
+            System.out.format("It seems that there's nothing else to compare...\n");
+            Thread.sleep(1000);
+            System.out.format("Finishing task...\n\n");
+            Thread.sleep(1500);
 
-            int stringCommonPart = 0;
-            int textPositionFirstString = -1;
-            int textPositionSecondString = -1;
-
-            findCommonString();
-
-
-            for (int i = 0; i < lengthFirstString; i++) {
-                for (int k = lengthSecondString - 1; k >= 0; k--) {
-                    int counter = 0;
-                    for (int j = k; j < lengthSecondString; j++) {
-                        if ((i + j - k) >= lengthFirstString) break;
-                        if (firstString.charAt(i + j - k) == secondString.charAt(j)) {
-                            counter++;
-                            if (stringCommonPart < counter) {
-                                stringCommonPart = counter;
-                                textPositionFirstString = i + j - k - stringCommonPart + 1;
-                                textPositionSecondString = j - stringCommonPart + 1;
-                            }
-                        } else counter = 0;
-                    }
-                }
-            }
-
-
-            System.out.println("\nSecond Loop:\n");
-
-            System.out.println("Starting position in 1st string: " + textPositionFirstString + "\nStarting position in 2nd string: " + textPositionSecondString + "\nLength of common part: " + stringCommonPart);
-
-            System.out.println();
-            System.out.println(firstString.substring(0, textPositionFirstString) + "\u001B[34m" + firstString.substring(textPositionFirstString, stringCommonPart + textPositionFirstString) + "\u001B[0m" + firstString.substring(stringCommonPart + textPositionFirstString));
-            System.out.println(secondString.substring(0, textPositionSecondString) + "\u001B[34m" + secondString.substring(textPositionSecondString, stringCommonPart + textPositionSecondString) + "\u001B[0m" + secondString.substring(stringCommonPart + textPositionSecondString));
-
-            listOfCommonStrings.clear();
-
-            deleteCommonElement.add(firstString.substring(textPositionFirstString, stringCommonPart + textPositionFirstString));
-
-            listOfCommonStrings.add(firstString.replace(firstString.substring(textPositionFirstString, stringCommonPart + textPositionFirstString), ""));
-            listOfCommonStrings.add(secondString.replace(secondString.substring(textPositionSecondString, stringCommonPart + textPositionSecondString), ""));
+            System.out.format("%s\n\nAll common part(s) of \033[1;36m%s\u001B[0m and \033[1;35m%s\u001B[0m are: \033[1;34m%s\u001B[0m\n\n%s\n\n", lines, originalFirstString, originalSecondString, listOfCommonStrings, lines);
+            System.out.print("Author: \033[1;31mTomasz Grabarczyk\u001B[0m\n");
+            System.exit(0);
         }
     }
 }
 
+class CompareEverything extends PrintOnConsole {
+    void compareEverything() throws InterruptedException {
+        setFirstString(getFirstString().toLowerCase());
+        setSecondString(getSecondString().toLowerCase());
 
+        System.out.print("Performing action...\n");
+        Thread.sleep(1000);
+        System.out.print("It seems that there is something to compare...\n\n");
+        Thread.sleep(1000);
 
-class ThirdLoop extends SecondLoop {
+        commonStringFinder();
+        printOnConsole();
 
-    void thirdLoop() {
-        secondLoop();
+        for (int i = 0; i < numberOfChecks; i++) {
+            setFirstString(updatedString.get(0));
+            setSecondString(updatedString.get(1));
+            setLengthOfCommonPart(0);
+            setTextPositionFirstString(-1);
+            setTextPositionSecondString(-1);
 
-        String firstString = listOfCommonStrings.get(0);
-        String secondString = listOfCommonStrings.get(1);
+            commonStringFinder();
 
-        if (firstString.isEmpty()) {
-            System.out.println("\nThere's nothing else to compare!\n");
-            for (String common : deleteCommonElement)
-                System.out.format("Common string of %s%s%s and %s%s%s is: %s\n", color, originalFirstString, resetColor, color, originalSecondString, resetColor, common);
-            System.exit(0);
-        } else {
-            int lengthFirstString = firstString.length();
-            int lengthSecondString = secondString.length();
-
-            int stringCommonPart = 0;
-            int textPositionFirstString = -1;
-            int textPositionSecondString = -1;
-
-
-            for (int i = 0; i < lengthFirstString; i++) {
-                for (int k = lengthSecondString - 1; k >= 0; k--) {
-                    int counter = 0;
-                    for (int j = k; j < lengthSecondString; j++) {
-                        if ((i + j - k) >= lengthFirstString) break;
-                        if (firstString.charAt(i + j - k) == secondString.charAt(j)) {
-                            counter++;
-                            if (stringCommonPart < counter) {
-                                stringCommonPart = counter;
-                                textPositionFirstString = i + j - k - stringCommonPart + 1;
-                                textPositionSecondString = j - stringCommonPart + 1;
-                            }
-                        } else counter = 0;
-                    }
-                }
+            System.out.print("\nPerforming action...\n");
+            Thread.sleep(1000);
+            if (getTextPositionFirstString() != -1 || getTextPositionSecondString() != -1) {
+                System.out.println("It seems that there is something to compare...\n");
+                Thread.sleep(1000);
             }
-
-
-            System.out.println("\nThird Loop:\n");
-
-            System.out.println("Starting position in 1st string: " + textPositionFirstString + "\nStarting position in 2nd string: " + textPositionSecondString + "\nLength of common part: " + stringCommonPart);
-
-            System.out.println();
-            System.out.println(firstString.substring(0, textPositionFirstString) + "\u001B[34m" + firstString.substring(textPositionFirstString, stringCommonPart + textPositionFirstString) + "\u001B[0m" + firstString.substring(stringCommonPart + textPositionFirstString));
-            System.out.println(secondString.substring(0, textPositionSecondString) + "\u001B[34m" + secondString.substring(textPositionSecondString, stringCommonPart + textPositionSecondString) + "\u001B[0m" + secondString.substring(stringCommonPart + textPositionSecondString));
-
-            listOfCommonStrings.clear();
-
-            deleteCommonElement.add(firstString.substring(textPositionFirstString, stringCommonPart + textPositionFirstString));
-
-            listOfCommonStrings.add(firstString.replace(firstString.substring(textPositionFirstString, stringCommonPart + textPositionFirstString), ""));
-            listOfCommonStrings.add(secondString.replace(secondString.substring(textPositionSecondString, stringCommonPart + textPositionSecondString), ""));
-        }
-    }
-}
-
-
-class FourthLoop extends ThirdLoop{
-
-    void fourthLoop() {
-        thirdLoop();
-
-        String firstString = listOfCommonStrings.get(0);
-        String secondString = listOfCommonStrings.get(1);
-
-        if (firstString.isEmpty()) {
-            System.out.println("\nThere's nothing else to compare!\n");
-            for (String common : deleteCommonElement)
-                System.out.format("Common string of %s%s%s and %s%s%s is: %s\n", color, originalFirstString, resetColor, color, originalSecondString, resetColor, common);
-            System.exit(0);
-        } else {
-            int lengthFirstString = firstString.length();
-            int lengthSecondString = secondString.length();
-
-            int stringCommonPart = 0;
-            int textPositionFirstString = -1;
-            int textPositionSecondString = -1;
-
-
-            for (int i = 0; i < lengthFirstString; i++) {
-                for (int k = lengthSecondString - 1; k >= 0; k--) {
-                    int counter = 0;
-                    for (int j = k; j < lengthSecondString; j++) {
-                        if ((i + j - k) >= lengthFirstString) break;
-                        if (firstString.charAt(i + j - k) == secondString.charAt(j)) {
-                            counter++;
-                            if (stringCommonPart < counter) {
-                                stringCommonPart = counter;
-                                textPositionFirstString = i + j - k - stringCommonPart + 1;
-                                textPositionSecondString = j - stringCommonPart + 1;
-                            }
-                        } else counter = 0;
-                    }
-                }
-            }
-
-
-            System.out.println("\nFourth Loop:\n");
-
-            System.out.println("Starting position in 1st string: " + textPositionFirstString + "\nStarting position in 2nd string: " + textPositionSecondString + "\nLength of common part: " + stringCommonPart);
-
-            System.out.println();
-            System.out.println(firstString.substring(0, textPositionFirstString) + "\u001B[34m" + firstString.substring(textPositionFirstString, stringCommonPart + textPositionFirstString) + "\u001B[0m" + firstString.substring(stringCommonPart + textPositionFirstString));
-            System.out.println(secondString.substring(0, textPositionSecondString) + "\u001B[34m" + secondString.substring(textPositionSecondString, stringCommonPart + textPositionSecondString) + "\u001B[0m" + secondString.substring(stringCommonPart + textPositionSecondString));
-
-            listOfCommonStrings.clear();
-
-            deleteCommonElement.add(firstString.substring(textPositionFirstString, stringCommonPart + textPositionFirstString));
-
-            listOfCommonStrings.add(firstString.replace(firstString.substring(textPositionFirstString, stringCommonPart + textPositionFirstString), ""));
-            listOfCommonStrings.add(secondString.replace(secondString.substring(textPositionSecondString, stringCommonPart + textPositionSecondString), ""));
-
-            System.out.println(listOfCommonStrings);
-            System.out.println(deleteCommonElement);
-        }
-    }
-}
-
-
-class FifthLoop extends FourthLoop{
-
-    void fifthLoop() {
-        fourthLoop();
-
-        String firstString = listOfCommonStrings.get(0);
-        String secondString = listOfCommonStrings.get(1);
-
-        if (firstString.isEmpty()) {
-            System.out.println("\nThere's nothing else to compare!\n");
-            for (String common : deleteCommonElement)
-                System.out.format("Common string of %s%s%s and %s%s%s is: %s\n", color, originalFirstString, resetColor, color, originalSecondString, resetColor, common);
-            System.exit(0);
-        } else {
-            int lengthFirstString = firstString.length();
-            int lengthSecondString = secondString.length();
-
-            int stringCommonPart = 0;
-            int textPositionFirstString = -1;
-            int textPositionSecondString = -1;
-
-
-            for (int i = 0; i < lengthFirstString; i++) {
-                for (int k = lengthSecondString - 1; k >= 0; k--) {
-                    int counter = 0;
-                    for (int j = k; j < lengthSecondString; j++) {
-                        if ((i + j - k) >= lengthFirstString) break;
-                        if (firstString.charAt(i + j - k) == secondString.charAt(j)) {
-                            counter++;
-                            if (stringCommonPart < counter) {
-                                stringCommonPart = counter;
-                                textPositionFirstString = i + j - k - stringCommonPart + 1;
-                                textPositionSecondString = j - stringCommonPart + 1;
-                            }
-                        } else counter = 0;
-                    }
-                }
-            }
-
-
-            System.out.println("\nFifth Loop:\n");
-
-            System.out.println("Starting position in 1st string: " + textPositionFirstString + "\nStarting position in 2nd string: " + textPositionSecondString + "\nLength of common part: " + stringCommonPart);
-
-            System.out.println();
-            System.out.println(firstString.substring(0, textPositionFirstString) + "\u001B[34m" + firstString.substring(textPositionFirstString, stringCommonPart + textPositionFirstString) + "\u001B[0m" + firstString.substring(stringCommonPart + textPositionFirstString));
-            System.out.println(secondString.substring(0, textPositionSecondString) + "\u001B[34m" + secondString.substring(textPositionSecondString, stringCommonPart + textPositionSecondString) + "\u001B[0m" + secondString.substring(stringCommonPart + textPositionSecondString));
-
-            listOfCommonStrings.clear();
-
-            deleteCommonElement.add(firstString.substring(textPositionFirstString, stringCommonPart + textPositionFirstString));
-
-            listOfCommonStrings.add(firstString.replace(firstString.substring(textPositionFirstString, stringCommonPart + textPositionFirstString), ""));
-            listOfCommonStrings.add(secondString.replace(secondString.substring(textPositionSecondString, stringCommonPart + textPositionSecondString), ""));
-        }
-    }
-}
-
-
-
-class SixthLoop extends FifthLoop {
-
-    void sixthLoop() {
-        fifthLoop();
-
-        String firstString = listOfCommonStrings.get(0) ;
-        String secondString = listOfCommonStrings.get(1);
-
-        if (firstString.isEmpty()) {
-            System.out.println("\nThere's nothing else to compare!\n");
-            for (String common : deleteCommonElement)
-                System.out.format("Common string of %s%s%s and %s%s%s is: %s\n", color, originalFirstString, resetColor, color, originalSecondString, resetColor, common);
-            System.exit(0);
-        } else {
-            int lengthFirstString = firstString.length();
-            int lengthSecondString = secondString.length();
-
-            int stringCommonPart = 0;
-            int textPositionFirstString = -1;
-            int textPositionSecondString = -1;
-
-
-            for (int i = 0; i < lengthFirstString; i++) {
-                for (int k = lengthSecondString - 1; k >= 0; k--) {
-                    int counter = 0;
-                    for (int j = k; j < lengthSecondString; j++) {
-                        if ((i + j - k) >= lengthFirstString) break;
-                        if (firstString.charAt(i + j - k) == secondString.charAt(j)) {
-                            counter++;
-                            if (stringCommonPart < counter) {
-                                stringCommonPart = counter;
-                                textPositionFirstString = i + j - k - stringCommonPart + 1;
-                                textPositionSecondString = j - stringCommonPart + 1;
-                            }
-                        } else counter = 0;
-                    }
-                }
-            }
-
-
-            System.out.println("\nFourth Loop:\n");
-
-            System.out.println("Starting position in 1st string: " + textPositionFirstString + "\nStarting position in 2nd string: " + textPositionSecondString + "\nLength of common part: " + stringCommonPart);
-
-            System.out.println();
-            System.out.println(firstString.substring(0, textPositionFirstString) + "\u001B[34m" + firstString.substring(textPositionFirstString, stringCommonPart + textPositionFirstString) + "\u001B[0m" + firstString.substring(stringCommonPart + textPositionFirstString));
-            System.out.println(secondString.substring(0, textPositionSecondString) + "\u001B[34m" + secondString.substring(textPositionSecondString, stringCommonPart + textPositionSecondString) + "\u001B[0m" + secondString.substring(stringCommonPart + textPositionSecondString));
-
-            listOfCommonStrings.clear();
-
-            deleteCommonElement.add(firstString.substring(textPositionFirstString, stringCommonPart + textPositionFirstString));
-
-            listOfCommonStrings.add(firstString.replace(firstString.substring(textPositionFirstString, stringCommonPart + textPositionFirstString), ""));
-            listOfCommonStrings.add(secondString.replace(secondString.substring(textPositionSecondString, stringCommonPart + textPositionSecondString), ""));
+            printOnConsole();
         }
     }
 }
