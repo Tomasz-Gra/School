@@ -60,17 +60,17 @@ class Variables {
 
 class CommonStringFinder extends Variables {
     void findCommonString() {
-        for (int i = 0; i < getFirstString().length(); i++) {
-            for (int k = getSecondString().length() - 1; k >= 0; k--) {
+        for (int firstIncrement = 0; firstIncrement < getFirstString().length(); firstIncrement++) {
+            for (int secondDecrement = getSecondString().length() - 1; secondDecrement >= 0; secondDecrement--) {
                 int counter = 0;
-                for (int j = k; j < getSecondString().length(); j++) {
-                    if ((i + j - k) >= getFirstString().length()) break;
-                    if (getFirstString().charAt(i + j - k) == getSecondString().charAt(j)) {
+                for (int secondIncrement = secondDecrement; secondIncrement < getSecondString().length(); secondIncrement++) {
+                    if ((firstIncrement + secondIncrement - secondDecrement) >= getFirstString().length()) break;
+                    if (getFirstString().charAt(firstIncrement + secondIncrement - secondDecrement) == getSecondString().charAt(secondIncrement)) {
                         counter++;
                         if (getLengthOfCommonPart() < counter) {
                             setLengthOfCommonPart(counter);
-                            setTextPositionFirstString(i + j - k - getLengthOfCommonPart() + 1);
-                            setTextPositionSecondString(j - getLengthOfCommonPart() + 1);
+                            setTextPositionFirstString(firstIncrement + secondIncrement - secondDecrement - getLengthOfCommonPart() + 1);
+                            setTextPositionSecondString(secondIncrement - getLengthOfCommonPart() + 1);
                         }
                     } else counter = 0;
                 }
